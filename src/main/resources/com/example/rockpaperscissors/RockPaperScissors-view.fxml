@@ -9,14 +9,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rockpaperscissors.RockPaperScissorsController">
    <children>
-      <Button id="0" layoutX="20.0" layoutY="60.0" mnemonicParsing="false" onAction="#onClick" prefHeight="100.0" prefWidth="100.0" />
-      <Button id="1" layoutX="140.0" layoutY="60.0" mnemonicParsing="false" onAction="#onClick" prefHeight="100.0" prefWidth="100.0" />
-       <Button id="2" layoutX="260.0" layoutY="60.0" mnemonicParsing="false" onAction="#onClick" prefHeight="100.0" prefWidth="100.0" />
+      <Button id="0" fx:id="rock" layoutX="20.0" layoutY="60.0" mnemonicParsing="false" onAction="#onClick" prefHeight="100.0" prefWidth="100.0" />
+      <Button id="1" fx:id="paper" layoutX="140.0" layoutY="60.0" mnemonicParsing="false" onAction="#onClick" prefHeight="100.0" prefWidth="100.0" />
+       <Button id="2" fx:id="scissor" layoutX="260.0" layoutY="60.0" mnemonicParsing="false" onAction="#onClick" prefHeight="100.0" prefWidth="100.0" />
       <Label fx:id="scoreLabel" layoutX="91.0" layoutY="191.0" text="score" />
       <Label fx:id="resultLabel" layoutX="30.0" layoutY="191.0" text="result" />
       <ProgressBar fx:id="progressBar" layoutX="20.0" layoutY="20.0" prefHeight="20.0" prefWidth="347.0" progress="0.0" />
       <Separator layoutX="187.0" layoutY="182.0" orientation="VERTICAL" prefHeight="107.0" prefWidth="0.0" />
       <Separator layoutX="20.0" layoutY="180.0" prefWidth="340.0" />
       <ListView fx:id="historyListView" layoutX="200.0" layoutY="189.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button fx:id="mediaplayer" layoutX="452.0" layoutY="60.0" mnemonicParsing="false" onAction="#onClickMediaPlayer" prefHeight="100.0" prefWidth="100.0" />
    </children>
 </AnchorPane>
