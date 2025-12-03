@@ -1,60 +1,64 @@
 package com.example.rockpaperscissors;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 
-import java.net.URL;
-import java.util.Map;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.Random;
 
-public class RockPaperScissorsController implements Initializable {
+public class RockPaperScissorsController {
     public Label scoreLabel;
     public Label resultLabel;
     public ProgressBar progressBar;
-    public TableView historyTableView;
-    public TableColumn userColumnTableView;
-    public TableColumn statusColumnTableView;
-    public TableColumn botColumnTableView;
+    public ListView<String> historyListView;
 
-    private final Map<String, String> imageMap = Map.of(
-            "0", "rock.jpeg",
-            "1", "paper.jpeg",
-            "2", "scissors.jpeg"
-    );
+    private int score = 0;
+    private final String[] options = {"Rock", "Paper", "Scissors"};
+    private final Random rand = new Random();
 
     public void onClick(ActionEvent actionEvent) {
+        Button src = (Button) actionEvent.getSource();
+        int userChoice = Integer.parseInt(src.getId());
+        int botChoice = rand.nextInt(3);
 
+        // get round results
+        String status = calcRoundStatus(userChoice, botChoice);
+        score = calcNewScore(status, score);
+
+        // update ui
+        scoreLabel.setText(String.valueOf(score));
+        historyListView.getItems().addFirst(
+                status +
+                " | Player: " + options[userChoice] +
+                ", Bot: " + options[botChoice]
+        );
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    private String calcRoundStatus(int userChoice, int botChoice) {
+        String status = "?";
 
-        AnchorPane root = (AnchorPane) scoreLabel.getParent();
-
-        for (Node node : root.getChildren()) {
-
-            if (node instanceof Button btn && btn.getId() != null) {
-
-                String imageName = imageMap.get(btn.getId());
-                if (imageName == null) continue;
-
-                Image image = new Image(Objects.requireNonNull(
-                        getClass().getResourceAsStream("/assets/images/" + imageName)
-                ));
-
-                ImageView iv = new ImageView(image);
-                iv.setFitWidth(100);
-                iv.setFitHeight(100);
-                iv.setPreserveRatio(true);
-
-                btn.setGraphic(iv);
-            }
+        if (
+                (userChoice == 0 && botChoice == 2) ||
+                (userChoice == 1 && botChoice == 0) ||
+                (userChoice == 2 && botChoice == 1))
+        {
+            status = "Win";
+        } else if (userChoice == botChoice) {
+            status = "Draw";
+        } else {
+            status = "Lose";
         }
+
+        return status;
+    }
+
+    private int calcNewScore(String roundStatus, int cur) {
+        return switch (roundStatus) {
+            case "Win" -> ++cur;
+            case "Lose" -> 0;
+            default -> cur;
+        };
     }
 }
