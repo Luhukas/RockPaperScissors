@@ -3,58 +3,52 @@ package com.example.rockpaperscissors;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class RockPaperScissorsController implements Initializable {
+
     public Label scoreLabel;
     public Label resultLabel;
     public ProgressBar progressBar;
-    public TableView historyTableView;
-    public TableColumn userColumnTableView;
-    public TableColumn statusColumnTableView;
-    public TableColumn botColumnTableView;
+    public ListView historyListView;
 
-    private final Map<String, String> imageMap = Map.of(
-            "0", "rock.jpeg",
-            "1", "paper.jpeg",
-            "2", "scissors.jpeg"
-    );
+    public Button rock;
+    public Button paper;
+    public Button scissor;
 
     public void onClick(ActionEvent actionEvent) {
-
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        AnchorPane root = (AnchorPane) scoreLabel.getParent();
+        setButtonImage(rock, "rock.jpeg");
+        setButtonImage(paper, "paper.jpeg");
+        setButtonImage(scissor, "scissors.jpeg");
+    }
 
-        for (Node node : root.getChildren()) {
+    private void setButtonImage(Button btn, String imageName) {
+        Image img = new Image(
+                Objects.requireNonNull(
+                        getClass().getResource("/assets/images/" + imageName)
+                ).toString()
+        );
 
-            if (node instanceof Button btn && btn.getId() != null) {
+        ImageView iv = new ImageView(img);
+        iv.setFitWidth(100);
+        iv.setFitHeight(100);
+        iv.setPreserveRatio(true);
 
-                String imageName = imageMap.get(btn.getId());
-                if (imageName == null) continue;
-
-                Image image = new Image(Objects.requireNonNull(
-                        getClass().getResourceAsStream("/assets/images/" + imageName)
-                ));
-
-                ImageView iv = new ImageView(image);
-                iv.setFitWidth(100);
-                iv.setFitHeight(100);
-                iv.setPreserveRatio(true);
-
-                btn.setGraphic(iv);
-            }
-        }
+        btn.setGraphic(iv);
     }
 }
