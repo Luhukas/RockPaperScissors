@@ -10,11 +10,12 @@ import java.util.Random;
 
 public class RockPaperScissorsController {
     public Label scoreLabel;
-    public Label resultLabel;
+    public Label highScoreLabel;
     public ProgressBar progressBar;
     public ListView<String> historyListView;
 
     private int score = 0;
+    private int highScore = 0;
     private final String[] options = {"Rock", "Paper", "Scissors"};
     private final Random rand = new Random();
 
@@ -29,6 +30,7 @@ public class RockPaperScissorsController {
 
         // update ui
         scoreLabel.setText(String.valueOf(score));
+        highScoreLabel.setText(String.valueOf(highScore));
         historyListView.getItems().addFirst(
                 status +
                 " | Player: " + options[userChoice] +
@@ -57,8 +59,13 @@ public class RockPaperScissorsController {
     private int calcNewScore(String roundStatus, int cur) {
         return switch (roundStatus) {
             case "Win" -> ++cur;
-            case "Lose" -> 0;
-            default -> cur;
+            case "Lose" -> {
+                if (cur > highScore) {
+                    highScore = cur;
+                }
+
+                yield 0;
+            } default -> cur;
         };
     }
 }
