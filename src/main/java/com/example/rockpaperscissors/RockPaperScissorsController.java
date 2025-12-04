@@ -26,7 +26,7 @@ public class RockPaperScissorsController {
 
         // get round results
         String status = calcRoundStatus(userChoice, botChoice);
-        score = calcNewScore(status, score);
+        score = calcNewScores(status, score);
 
         // update ui
         scoreLabel.setText(String.valueOf(score));
@@ -39,7 +39,11 @@ public class RockPaperScissorsController {
     }
 
     private String calcRoundStatus(int userChoice, int botChoice) {
-        String status = "?";
+        String status;
+
+        // Rock    : 0
+        // Paper   : 1
+        // Scissor : 2
 
         if (
                 (userChoice == 0 && botChoice == 2) ||
@@ -56,16 +60,16 @@ public class RockPaperScissorsController {
         return status;
     }
 
-    private int calcNewScore(String roundStatus, int cur) {
+    private int calcNewScores(String roundStatus, int curScore) {
         return switch (roundStatus) {
-            case "Win" -> ++cur;
+            case "Win" -> ++curScore;
             case "Lose" -> {
-                if (cur > highScore) {
-                    highScore = cur;
+                if (curScore > highScore) {
+                    highScore = curScore;
                 }
 
                 yield 0;
-            } default -> cur;
+            } default -> curScore;
         };
     }
 }
