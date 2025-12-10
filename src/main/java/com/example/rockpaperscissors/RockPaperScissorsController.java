@@ -8,38 +8,31 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 public class RockPaperScissorsController implements Initializable {
-
-    public Label scoreLabel;
-    public Label highScoreLabel;
-    public ProgressBar progressBar;
-    public ListView<String> historyListView;
-
     public Button rock;
     public Button paper;
     public Button scissor;
+    public Button mediaplayer;
+    public Label scoreLabel;
+    public Label highScoreLabel;
+    public ListView<String> historyListView;
+    public ProgressBar progressBar;
+
     private int score = 0;
     private int highScore = 0;
+    private MediaPlayer player;
+    private boolean isSoundPlaying = false;
     private final String[] options = {"Rock", "Paper", "Scissors"};
     private final Random rand = new Random();
 
-    public Button mediaplayer;
-    private MediaPlayer player;
-    boolean isSoundPlaying = false;
     public void onClick(ActionEvent actionEvent) {
         Button src = (Button) actionEvent.getSource();
         int userChoice = Integer.parseInt(src.getId());
@@ -59,36 +52,6 @@ public class RockPaperScissorsController implements Initializable {
         );
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setButtonImage(rock, "rock.jpeg");
-        setButtonImage(paper, "paper.jpeg");
-        setButtonImage(scissor, "scissors.jpeg");
-        setButtonImage(mediaplayer, "vinyl.gif");
-
-        Media media = new Media(
-                Objects.requireNonNull(
-                        getClass().getResource("/assets/sound/sound.mp3")
-                ).toString()
-        );
-
-        player = new MediaPlayer(media);
-    }
-
-    private void setButtonImage(Button btn, String imageName) {
-        Image img = new Image(
-                Objects.requireNonNull(
-                        getClass().getResource("/assets/images/" + imageName)
-                ).toString()
-        );
-
-        ImageView iv = new ImageView(img);
-        iv.setFitWidth(100);
-        iv.setFitHeight(100);
-        iv.setPreserveRatio(true);
-
-        btn.setGraphic(iv);
-    }
     private String calcRoundStatus(int userChoice, int botChoice) {
         String status;
 
@@ -123,6 +86,22 @@ public class RockPaperScissorsController implements Initializable {
             } default -> curScore;
         };
     }
+
+    private void setButtonImage(Button btn, String imageName) {
+        Image img = new Image(
+                Objects.requireNonNull(
+                        getClass().getResource("/assets/images/" + imageName)
+                ).toString()
+        );
+
+        ImageView iv = new ImageView(img);
+        iv.setFitWidth(100);
+        iv.setFitHeight(100);
+        iv.setPreserveRatio(true);
+
+        btn.setGraphic(iv);
+    }
+
     public void onClickMediaPlayer(ActionEvent actionEvent) {
         if (isSoundPlaying){
             player.pause();
@@ -131,5 +110,21 @@ public class RockPaperScissorsController implements Initializable {
             player.play();
             isSoundPlaying = true;
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setButtonImage(rock, "rock.jpeg");
+        setButtonImage(paper, "paper.jpeg");
+        setButtonImage(scissor, "scissors.jpeg");
+        setButtonImage(mediaplayer, "vinyl.gif");
+
+        Media media = new Media(
+                Objects.requireNonNull(
+                        getClass().getResource("/assets/sound/sound.mp3")
+                ).toString()
+        );
+
+        player = new MediaPlayer(media);
     }
 }
