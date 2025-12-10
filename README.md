@@ -10,5 +10,5 @@ music:
 ```
 
 ### Contributors
- - gerdeneb
- - lradlspo
+ - gerdeneb | Ganerdene Erdenebayr
+ - lradlspo | Lukas Radlspöck
