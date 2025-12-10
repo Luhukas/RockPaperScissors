@@ -46,9 +46,9 @@ public class RockPaperScissorsController implements Initializable {
         scoreLabel.setText(String.valueOf(score));
         highScoreLabel.setText(String.valueOf(highScore));
         historyListView.getItems().addFirst(
-                status +
-                " | Player: " + options[userChoice] +
-                ", Bot: " + options[botChoice]
+                options[userChoice] +
+                "\t| " + status +
+                " |\t" + options[botChoice]
         );
     }
 
@@ -61,9 +61,8 @@ public class RockPaperScissorsController implements Initializable {
 
         if (
                 (userChoice == 0 && botChoice == 2) ||
-                        (userChoice == 1 && botChoice == 0) ||
-                        (userChoice == 2 && botChoice == 1))
-        {
+                (userChoice == 1 && botChoice == 0) ||
+                (userChoice == 2 && botChoice == 1)) {
             status = "Win";
         } else if (userChoice == botChoice) {
             status = "Draw";
@@ -83,7 +82,8 @@ public class RockPaperScissorsController implements Initializable {
                 }
 
                 yield 0;
-            } default -> curScore;
+            }
+            default -> curScore;
         };
     }
 
@@ -103,10 +103,10 @@ public class RockPaperScissorsController implements Initializable {
     }
 
     public void onClickMediaPlayer(ActionEvent actionEvent) {
-        if (isSoundPlaying){
+        if (isSoundPlaying) {
             player.pause();
             isSoundPlaying = false;
-        } else{
+        } else {
             player.play();
             isSoundPlaying = true;
         }
